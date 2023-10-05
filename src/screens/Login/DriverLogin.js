@@ -60,7 +60,7 @@ const DriverLogin = () => {
       } else {
         firebase.auth().currentUser.sendEmailVerification({
           handleCodeInApp: true,
-          url: "https://angkas-9b800.firebaseapp.com",
+          url: "https://aa-ridealong.firebaseapp.com",
         });
         alert("Please verify your email before proceeding.");
         await firebase.auth().signOut();

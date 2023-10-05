@@ -16,11 +16,11 @@ const StudentRegistration = () => {
   const [showErrorPass, setShowErrorPass] = useState(false);
 
   const validateEmail = (email) => {
-    if (email.endsWith("@dhvsu.edu.ph")) {
+    if (email.endsWith("@gmail.com")) {
       return true;
     } else {
       alert(
-        'Invalid Email Please enter your valid dhvsu email address ending with "@dhvsu.edu.ph".'
+        'Invalid Email Please enter your valid dhvsu email address ending with "@gmail.com".'
       );
       return false;
     }
@@ -45,7 +45,7 @@ const StudentRegistration = () => {
       await firebase.auth().createUserWithEmailAndPassword(email, password);
       await firebase.auth().currentUser.sendEmailVerification({
         handleCodeInApp: true,
-        url: "https://angkas-9b800.firebaseapp.com",
+        url: "https://aa-ridealong.firebaseapp.com",
       });
 
       await firebase

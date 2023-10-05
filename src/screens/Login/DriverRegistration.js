@@ -36,7 +36,7 @@ const DriverRegistration = () => {
           .auth()
           .currentUser.sendEmailVerification({
             handleCodeInApp: true,
-            url: "https://angkas-9b800.firebaseapp.com",
+            url: "https://aa-ridealong.firebaseapp.com",
           })
           .then(() => {
             alert("Verification Email Sent");
@@ -55,6 +55,8 @@ const DriverRegistration = () => {
                 email,
                 driverId,
               });
+
+            navigation.navigate("LoginHome");
           })
           .catch((err) => {
             alert(err.message);

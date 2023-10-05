@@ -4,17 +4,16 @@ import "firebase/compat/firestore";
 import { getDatabase } from "firebase/database";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBe4P1P51XqM59_xaS7xPMH2mTSr4-Ne5c",
-  authDomain: "angkas-9b800.firebaseapp.com",
+  apiKey: "AIzaSyBrkihEf6X2YEFwDNBxCnTVZjezpyOLEn0",
+  authDomain: "aa-ridealong.firebaseapp.com",
   databaseURL:
-    "https://angkas-9b800-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "angkas-9b800",
-  storageBucket: "angkas-9b800.appspot.com",
-  messagingSenderId: "695994357285",
-  appId: "1:695994357285:web:e95a079d76eab001c8d1cc",
-  measurementId: "G-34X3VZQZ0Y",
+    "https://aa-ridealong-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "aa-ridealong",
+  storageBucket: "aa-ridealong.appspot.com",
+  messagingSenderId: "723756690653",
+  appId: "1:723756690653:web:48cf043bd1df60bedbbf34",
+  measurementId: "G-LCHFRDZLHL",
 };
-
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
 }

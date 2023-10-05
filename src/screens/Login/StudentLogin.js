@@ -7,6 +7,7 @@ import { setUserIsLoggedin, setUserProfile } from "../../redux/navSlice";
 import { useDispatch } from "react-redux";
 import * as Animatable from "react-native-animatable";
 import Entypo from "react-native-vector-icons/Entypo";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 const StudentLogin = () => {
   const [password, setPassword] = useState("");
@@ -49,7 +50,6 @@ const StudentLogin = () => {
           const userData = userDoc.data();
           await AsyncStorage.setItem("userInfo", JSON.stringify(userData));
 
-          dispatch(setUserProfile(userFirestoreData));
           dispatch(setUserIsLoggedin("student"));
           await AsyncStorage.setItem("user", JSON.stringify(user));
         } else {
@@ -58,7 +58,7 @@ const StudentLogin = () => {
       } else {
         firebase.auth().currentUser.sendEmailVerification({
           handleCodeInApp: true,
-          url: "https://angkas-9b800.firebaseapp.com",
+          url: "https://aa-ridealong.firebaseapp.com",
         });
 
         alert("Please verify your email before proceeding.");
@@ -128,13 +128,13 @@ const StudentLogin = () => {
             duration={2000}
             iterationCount={1}
           >
-            <Pressable
+            <TouchableOpacity
               style={styles.button}
               onPress={() => loginUser(email, password)}
               disabled={!email || !password}
             >
               <Text style={styles.buttonText}>SIGN IN</Text>
-            </Pressable>
+            </TouchableOpacity>
           </Animatable.View>
         </Animatable.View>
       </Animatable.View>
