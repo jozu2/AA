@@ -62,7 +62,7 @@ const StudentRegistration = () => {
       await firebase.auth().signOut();
 
       alert("Verification Email Sent");
-      navigation.navigate("StudentLogin");
+      navigation.navigate("LoginHome");
     } catch (error) {
       alert(error.message);
     }

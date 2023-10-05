@@ -48,11 +48,11 @@ const MainNavigation = () => {
         }, 2000); // 2000 milliseconds (2 seconds)
       }
       if (driver) {
+        const driverFirestoreData = JSON.parse(driverFirestore);
+        dispatch(setUserProfile(driverFirestoreData));
         const userData = JSON.parse(driver);
         const userUID = userData.uid;
         dispatch(setUserId(userUID));
-        const driverFirestoreData = JSON.parse(driverFirestore);
-        dispatch(setUserProfile(driverFirestoreData));
 
         dispatch(setUserIsLoggedin("driver"));
         setTimeout(() => {

@@ -26,30 +26,32 @@ const DriverHomePage = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const q = query(
-      postedRidesRef,
-      orderByChild("driverProfile/UID"),
-      equalTo(idToSearch)
-    );
+    // Ensure idToSearch is defined and not null or undefined
+    if (idToSearch) {
+      const q = query(
+        postedRidesRef,
+        orderByChild("driverProfile/UID"),
+        equalTo(idToSearch)
+      );
 
-    get(q)
-      .then((snapshot) => {
-        const matchingUids = [];
-        if (snapshot.exists()) {
-          snapshot.forEach((childSnapshot) => {
-            const uid = childSnapshot.key; // This is the UID you want
-            matchingUids.push(uid);
-          });
-          setUids(matchingUids);
-        } else {
-          console.log("No matching records found.");
-        }
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
-  }, []);
-
+      get(q)
+        .then((snapshot) => {
+          const matchingUids = [];
+          if (snapshot.exists()) {
+            snapshot.forEach((childSnapshot) => {
+              const uid = childSnapshot.key; // This is the UID you want
+              matchingUids.push(uid);
+            });
+            setUids(matchingUids);
+          } else {
+            console.log("No matching records found.");
+          }
+        })
+        .catch((error) => {
+          console.error("Error fetching data:", error);
+        });
+    }
+  }, [idToSearch]);
   useEffect(() => {
     async function fetchData() {
       try {
@@ -63,6 +65,9 @@ const DriverHomePage = () => {
               id: uid,
               ...requestData,
             };
+          } else {
+            console.log(`No data found for UID: ${uid}`);
+            return null; // Return null for undefined data
           }
         });
 

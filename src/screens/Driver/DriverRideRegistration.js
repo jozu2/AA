@@ -112,7 +112,7 @@ const DriverRideRegistration = () => {
   }
 
   handleShareBtn = () => {
-    if (origin && destination && when && tod && seatAvail) {
+    if (origin && destination && when && tod && seatAvail && userProfile) {
       set(ref(db, `POSTED_RIDES/${userID}${makeid(5)}`), {
         coordinates: {
           origin: {
@@ -134,7 +134,6 @@ const DriverRideRegistration = () => {
         driverProfile: {
           firstName: userProfile.firstName,
           lastName: userProfile.lastName,
-          contact: userProfile.contact,
           email: userProfile.email,
           UID: userID,
         },
