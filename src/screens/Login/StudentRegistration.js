@@ -16,11 +16,11 @@ const StudentRegistration = () => {
   const [showErrorPass, setShowErrorPass] = useState(false);
 
   const validateEmail = (email) => {
-    if (email.endsWith("@gmail.com")) {
+    if (email.endsWith("@dhvsu.edu.ph")) {
       return true;
     } else {
       alert(
-        'Invalid Email Please enter your valid dhvsu email address ending with "@gmail.com".'
+        'Invalid Email Please enter your valid dhvsu email address ending with "@dhvsu.edu.ph".'
       );
       return false;
     }
@@ -62,7 +62,7 @@ const StudentRegistration = () => {
       await firebase.auth().signOut();
 
       alert("Verification Email Sent");
-      navigation.navigate("LoginHome");
+      navigation.navigate("HomeLogin");
     } catch (error) {
       alert(error.message);
     }

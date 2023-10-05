@@ -6,7 +6,7 @@ import AntDesign from "react-native-vector-icons/AntDesign";
 import Foundation from "react-native-vector-icons/Foundation";
 import Feather from "react-native-vector-icons/Feather";
 
-const DriverProfile = () => {
+const UserProfile = () => {
   return (
     <SafeAreaView>
       <View
@@ -137,7 +137,7 @@ const DriverProfile = () => {
                 <Text
                   style={{ fontSize: 12, fontWeight: "500", color: "#4f4f4f" }}
                 >
-                  Total Shared Rides
+                  Total Rides
                 </Text>
               </View>
               <View style={{ alignItems: "center" }}>
@@ -211,14 +211,31 @@ const DriverProfile = () => {
           </View>
         </View>
         <View>
-          <View></View>
+          <View>
+            <View>
+              <Pressable style={styles.pressableBtn}>
+                <AntDesign name="idcard" size={30} color="black" />
+                <View style={{ paddingLeft: 15 }}>
+                  <Text
+                    style={{
+                      fontSize: 17,
+                      fontWeight: "500",
+                    }}
+                  >
+                    N/A
+                  </Text>
+                  <Text style={{ fontSize: 12, fontWeight: "300" }}>N/A</Text>
+                </View>
+              </Pressable>
+            </View>
+          </View>
         </View>
       </View>
     </SafeAreaView>
   );
 };
 
-export default DriverProfile;
+export default UserProfile;
 
 const styles = StyleSheet.create({
   pressableBtn: {

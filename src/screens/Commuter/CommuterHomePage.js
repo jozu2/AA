@@ -505,7 +505,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignSelf: "center",
     position: "absolute",
-    bottom: 35,
+    bottom: 20,
     zIndex: 5500,
   },
 });

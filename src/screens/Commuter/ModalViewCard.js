@@ -1,6 +1,10 @@
 import { View, Text } from "react-native";
 import { useSelector } from "react-redux";
-import { selectedCardData } from "../../redux/navSlice";
+import {
+  selectUserId,
+  selectUserProfile,
+  selectedCardData,
+} from "../../redux/navSlice";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import { useNavigation } from "@react-navigation/native";
 import tw from "twrnc";
@@ -9,6 +13,9 @@ import MapView, { Marker } from "react-native-maps";
 import MapViewDirections from "react-native-maps-directions";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Pressable } from "react-native";
+import { TouchableOpacity } from "react-native-gesture-handler";
+import { ref, set } from "firebase/database";
+import { db } from "../../../config";
 const ModalViewCard = () => {
   const cardData = useSelector(selectedCardData);
   const navigation = useNavigation();
@@ -54,7 +61,54 @@ const ModalViewCard = () => {
     minute: "2-digit",
     hour12: true,
   });
-  console.log(formattedTime);
+  const userProfile = useSelector(selectUserProfile);
+  const userID = useSelector(selectUserId);
+  const userName = `${userProfile.firstName} ${userProfile.lastName}`;
+  const handleRequestRide = () => {
+    if (cardData && userProfile && centerLocation) {
+      set(
+        ref(
+          db,
+          `POSTED_RIDES/${cardData.driverProfile.UID}${cardData.driverProfile.postID}/Request/${userID}`
+        ),
+        {
+          latitude: centerLocation.latitude,
+          longitude: centerLocation.longitude,
+          rideInfo: rideInfo,
+          userInfo: {
+            userName: userName,
+            userID: userID,
+          },
+          status: {
+            isAccepted: false,
+            isDOne: false,
+          },
+        }
+      );
+      alert("Request Successful");
+    } else {
+      alert("Incomplete Information");
+    }
+
+    if (cardData && userProfile && centerLocation) {
+      set(ref(db, `REQUEST_RIDES/${userID}`), {
+        latitude: centerLocation.latitude,
+        longitude: centerLocation.longitude,
+        rideInfo: rideInfo,
+        userInfo: {
+          userName: userName,
+          userID: userID,
+        },
+        status: {
+          isAccepted: false,
+          isDOne: false,
+        },
+      });
+    } else {
+      alert("Incomplete Information");
+    }
+    navigation.replace("UserNavHome");
+  };
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
       {/* <View
@@ -79,10 +133,39 @@ const ModalViewCard = () => {
             position: "absolute",
           }}
         >
-          <View style={{ backgroundColor: "#fff", padding: 10 }}>
+          <View
+            style={{
+              backgroundColor: "#fff",
+              padding: 10,
+              borderWidth: 1,
+              marginTop: 20,
+            }}
+          >
             <Text>{`Pickup Location: ${rideInfo.description}`}</Text>
             <Text>{`Estimated Time of Arrival ${resultDuration} minutes`}</Text>
             <Text>{`Distance: ${resultDistancex} km`}</Text>
+          </View>
+          <View>
+            <TouchableOpacity
+              onPress={handleRequestRide}
+              style={{
+                width: 220,
+                alignSelf: "center",
+                borderRadius: 10,
+                marginTop: 10,
+                backgroundColor: "#fff",
+                borderWidth: 1,
+              }}
+            >
+              <Text
+                style={{
+                  alignSelf: "center",
+                  paddingVertical: 15,
+                }}
+              >
+                REQUEST RIDE ALONG
+              </Text>
+            </TouchableOpacity>
           </View>
         </View>
       )}
@@ -101,7 +184,6 @@ const ModalViewCard = () => {
         }}
         onPress={() => {
           setIsSet(!isSet);
-          console.log(centerLocation);
         }}
       >
         <Text style={{ fontSize: 18 }}>
@@ -205,7 +287,6 @@ const ModalViewCard = () => {
               timePrecision="now"
               optimizeWaypoints={true}
               onReady={(result) => {
-                console.log(result);
                 const distance = result.distance || 0;
                 const duration = result.duration || 0;
                 const description = result.legs[0].end_address;

@@ -10,7 +10,7 @@ import { db } from "./../../../config";
 import { ref, query, orderByChild, equalTo, get } from "firebase/database";
 import { selectUserId, setViewBookings } from "../../redux/navSlice";
 import { useDispatch, useSelector } from "react-redux";
-import { ScrollView } from "react-native-gesture-handler";
+import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 import MapView, { Marker } from "react-native-maps";
 import MapViewDirections from "react-native-maps-directions";
 
@@ -106,16 +106,38 @@ const DriverHomePage = () => {
                   <View key={data.id} style={styles.cardBox}>
                     <View>
                       <View style={styles.detailsContainer}>
-                        <View>
-                          <Ionicons
-                            name="chatbox-outline"
-                            color={"#7a7a7a"}
-                            size={35}
-                            style={[
-                              styles.IconChat,
-                              { transform: [{ scaleX: -1 }] },
-                            ]}
-                          />
+                        <View style={[styles.IconChat]}>
+                          <TouchableOpacity
+                            onPress={() => {
+                              if (data) {
+                                dispatch(
+                                  setViewBookings({
+                                    Request: data.Request,
+                                    DriverData: data,
+                                  })
+                                );
+                                navigation.navigate("UserAccepted");
+                              } else {
+                                dispatch(
+                                  setViewBookings({
+                                    Request: "",
+                                    DriverData: "",
+                                  })
+                                );
+                                navigation.navigate("UserAccepted");
+                              }
+                            }}
+                          >
+                            <AntDesign
+                              name="user"
+                              color={"#7a7a7a"}
+                              size={35}
+                            />
+                            <View></View>
+                            <Text
+                              style={{ paddingLeft: 5 }}
+                            >{`1/${data.Schedule.seatAvailable}`}</Text>
+                          </TouchableOpacity>
                         </View>
                         <View>
                           <EvilIcons
@@ -223,12 +245,21 @@ const DriverHomePage = () => {
                         <Pressable
                           style={styles.Btn}
                           onPress={() => {
-                            if (data.UserBooked) {
-                              dispatch(setViewBookings(data.UserBooked));
+                            if (data) {
+                              dispatch(
+                                setViewBookings({
+                                  Request: data.Request,
+                                  DriverData: data,
+                                })
+                              );
                               navigation.navigate("ViewBooking");
-                              console.log(data.UserBooked);
                             } else {
-                              dispatch(setViewBookings(""));
+                              dispatch(
+                                setViewBookings({
+                                  Request: "",
+                                  DriverData: "",
+                                })
+                              );
                               navigation.navigate("ViewBooking");
                             }
                           }}
@@ -320,7 +351,7 @@ const styles = StyleSheet.create({
     display: "flex",
     flexGrow: 1,
     paddingHorizontal: 12,
-    paddingVertical: 50,
+    paddingVertical: 35,
   },
   wl: {
     backgroundColor: "#f2f2f2",
@@ -457,5 +488,6 @@ const styles = StyleSheet.create({
   IconChat: {
     position: "absolute",
     top: 20,
+    left: 20,
   },
 });

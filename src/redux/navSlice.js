@@ -6,7 +6,7 @@ const initialState = {
   destination: null,
   destinationDescription: null,
   travelTimeInformation: null,
-  viewBookings: "",
+  viewBookings: null,
 };
 
 export const navSlice = createSlice({
@@ -36,36 +36,29 @@ export const navSlice = createSlice({
       state.cardData = action.payload;
     },
 
-    //gotohome datas
-    setHomeDestination: (state, action) => {
-      state.homeDestination = action.payload;
+    setUserLocationBooked: (state, action) => {
+      state.userLocationBooked = action.payload;
     },
 
     setGoingHomeTraveltime: (state, action) => {
       state.goingHomeTraveltime = action.payload;
     },
 
-    //UserIsLogin
     setUserIsLoggedin: (state, action) => {
       state.userIsLoggedIn = action.payload;
     },
 
-    //isLoading
     setIsLoading: (state, action) => {
       state.isLoading = action.payload;
     },
-
-    //User.Uid
     setUserId: (state, action) => {
       state.userId = action.payload;
     },
 
-    //User.Profile
     setUserProfile: (state, action) => {
       state.userProfile = action.payload;
     },
 
-    //DriverLocation
     setDriverLocation: (state, action) => {
       state.driverLocation = action.payload;
     },
@@ -78,7 +71,7 @@ export const {
   setOriginDescription,
   setViewBookings,
   setTravelTimeInformation,
-  setHomeDestination,
+  setUserLocationBooked,
   setGoingHomeTraveltime,
   setUserIsLoggedin,
   setIsLoading,
@@ -101,7 +94,7 @@ export const selectViewBookings = (state) => state.nav.viewBookings;
 export const selectedCardData = (state) => state.nav.cardData;
 
 //Selectors go to home user
-export const selectHomeDestination = (state) => state.nav.homeDestination;
+export const selectUserLocationBooked = (state) => state.nav.userLocationBooked;
 export const SelectGoingHomeTraveltime = (state) =>
   state.nav.goingHomeTraveltime;
 

@@ -50,33 +50,35 @@ const DriverRideRegistration = () => {
   const mapRef = useRef(null);
 
   const toggleDatePicker = () => {
-    setShowPicker(!showPicker);
+    setShowPicker(true);
   };
 
   const toggleTimePicker = () => {
-    setShowTimePicker(!showTimePicker);
+    setShowTimePicker(true);
   };
 
   const onChange = ({ type }, selectedDate) => {
     if (type == "set") {
       const currentDate = selectedDate;
       setDate(currentDate);
-      toggleDatePicker();
       setWhen(currentDate.toDateString());
+      setShowPicker(false);
     } else {
-      toggleDatePicker();
+      setShowPicker(false);
     }
   };
 
-  const onChangeTime = ({ type }, selectedDate) => {
+  const onChangeTime = ({ type }, selectedTime) => {
     if (type === "set") {
-      const currentTime = selectedDate.toLocaleTimeString([], {
+      const currentTime = selectedTime.toLocaleTimeString([], {
         hour: "2-digit",
         minute: "2-digit",
       });
       setTod(currentTime);
+      setShowTimePicker(false);
+    } else {
+      setShowTimePicker(false);
     }
-    toggleTimePicker();
   };
   const minimumTime = new Date();
   minimumTime.setHours(0, 0, 0, 0);
@@ -110,10 +112,10 @@ const DriverRideRegistration = () => {
     }
     return result;
   }
-
+  const uniqueID = makeid(5);
   handleShareBtn = () => {
     if (origin && destination && when && tod && seatAvail && userProfile) {
-      set(ref(db, `POSTED_RIDES/${userID}${makeid(5)}`), {
+      set(ref(db, `POSTED_RIDES/${userID}${uniqueID}`), {
         coordinates: {
           origin: {
             latitude: origin.latitude,
@@ -136,6 +138,7 @@ const DriverRideRegistration = () => {
           lastName: userProfile.lastName,
           email: userProfile.email,
           UID: userID,
+          postID: uniqueID,
         },
       });
 
@@ -260,7 +263,6 @@ const DriverRideRegistration = () => {
                     value={date}
                     timeZoneName={"Asia/Manila"}
                     onChange={onChangeTime}
-                    onPress={toggleTimePicker}
                     minimumDate={new Date().toLocaleTimeString([], {
                       hour: "2-digit",
                       minute: "2-digit",

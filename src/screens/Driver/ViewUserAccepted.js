@@ -16,7 +16,7 @@ import { useEffect } from "react";
 import { db } from "../../../config";
 import { get, ref } from "firebase/database";
 
-const ViewBookings = () => {
+const ViewUserAccepted = () => {
   const bookingData = useSelector(selectViewBookings);
   const bookingDataX = bookingData.Request;
   const bookingKeys = Object.keys(bookingDataX);
@@ -38,13 +38,12 @@ const ViewBookings = () => {
         }));
 
         const filteredRequests = requests.filter((request) => {
-          return !request.status.isAccepted;
+          return request.status.isAccepted;
         });
 
         if (filteredRequests.length > 0) {
           const randomRequest = filteredRequests;
           setFilteredBookingData(randomRequest);
-          console.log(randomRequest);
         } else {
           console.log("error in fetching");
         }
@@ -57,14 +56,31 @@ const ViewBookings = () => {
   }, []);
 
   return (
-    <View style={{ flex: 1, marginTop: 50 }}>
+    <View style={{ flex: 1, marginTop: 20 }}>
       <ScrollView style={{ flex: 1 }}>
+        <Text
+          style={{
+            alignSelf: "center",
+            fontSize: 20,
+            marginTop: 20,
+            fontWeight: "bold",
+          }}
+        >
+          Users
+        </Text>
+
         {!filteredBookingData && (
-          <View>
-            <Text style={{ alignSelf: "center", fontSize: 30 }}>
-              NO BOOKINGS ATM
-            </Text>
-          </View>
+          <Text
+            style={{
+              alignSelf: "center",
+              fontSize: 16,
+              marginTop: 20,
+              color: "red",
+              fontWeight: "300",
+            }}
+          >
+            NO USER ACCEPTED
+          </Text>
         )}
         {filteredBookingData &&
           filteredBookingData.map((booking, key) => (
@@ -73,7 +89,7 @@ const ViewBookings = () => {
                 <TouchableOpacity
                   style={[tw`shadow-md`, styles.container]}
                   onPress={() => {
-                    navigation.navigate("BookingDetails");
+                    navigation.navigate("AcceptedUserDetails");
                     dispatch(setUserLocationBooked(booking));
                   }}
                 >
@@ -105,18 +121,34 @@ const ViewBookings = () => {
               </View>
             </View>
           ))}
+        <View>
+          <Text style={{ alignSelf: "center", fontSize: 20, marginTop: 20 }}>
+            Comment Section
+          </Text>
+          <View
+            style={{
+              height: 300,
+              backgroundColor: "#fff",
+              width: "95%",
+              alignSelf: "center",
+              marginTop: 20,
+              borderRadius: 10,
+              borderWidth: 1,
+            }}
+          ></View>
+        </View>
       </ScrollView>
     </View>
   );
 };
 
-export default ViewBookings;
+export default ViewUserAccepted;
 
 const styles = StyleSheet.create({
   mainContainer: { padding: 10, flex: 1 },
   container: {
     backgroundColor: "#fff",
-    padding: 15,
+    padding: 8,
     borderRadius: 10,
   },
   nameAndProfileContainer: {
@@ -125,8 +157,8 @@ const styles = StyleSheet.create({
     alignContent: "center",
   },
   profilePic: {
-    width: 70,
-    height: 70,
+    width: 50,
+    height: 50,
     backgroundColor: "#b1b1b1",
     borderWidth: 1.6,
     borderColor: "red",

@@ -6,6 +6,7 @@ import CommuterHomePage from "../screens/Commuter/CommuterHomePage";
 import CommuterSettings from "../screens/Commuter/CommuterSettings";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import CustomDrawer from "../screens/Commuter/CustomDrawer";
+import UserProfile from "../screens/Commuter/UserProfile";
 const UserNav = () => {
   const Drawer = createDrawerNavigator();
   return (
@@ -60,6 +61,15 @@ const UserNav = () => {
           options={{
             drawerIcon: ({ color }) => (
               <Feather name="settings" size={22} color={color} />
+            ),
+          }}
+        />
+        <Drawer.Screen
+          name="CommuterProfile"
+          component={UserProfile}
+          options={{
+            drawerIcon: ({ color }) => (
+              <Feather name="user" size={22} color={color} />
             ),
           }}
         />
